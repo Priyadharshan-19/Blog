@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-brand-lime: #C8FF43;
+  --color-brand-pink: #FF7EB6;
+  --color-brand-purple: #7B4DFF;
+  --color-brand-bg: #FAFAFA;
+
+  /* Brutalist Shadows */
+  --shadow-brutal: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutal-sm: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutal-hover: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-brand-bg);
+    background-image:
+      linear-gradient(to right, #e5e5e5 1px, transparent 1px),
+      linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: #000;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+}
+
+@layer components {
+  .brutal-border {
+    border: 4px solid black;
+  }
+
+  .brutal-card {
+    border: 4px solid black;
+    border-radius: 10px;
+    background: white;
+    box-shadow: var(--shadow-brutal);
+    transition: all 0.2s ease;
+  }
+
+  .brutal-button {
+    border: 4px solid black;
+    border-radius: 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-brutal-sm);
+    transition: all 0.2s ease;
+  }
+
+  .brutal-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .brutal-button:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  .brutal-hover {
+    transition: all 0.2s ease;
+  }
+
+  .brutal-hover:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: var(--shadow-brutal-hover);
+  }
+}

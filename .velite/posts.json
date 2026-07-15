@@ -1,0 +1,12 @@
+[
+  {
+    "title": "My First Post in Neo-Brutalism",
+    "slug": "posts/my-first-post",
+    "date": "2026-07-15T00:00:00.000Z",
+    "category": "Build Log",
+    "readTime": "2 min read",
+    "description": "Testing out Velite, MDX, and this crazy heavy-border design system.",
+    "content": "const{Fragment:e,jsx:n,jsxs:t}=arguments[0];function _createMdxContent(o){const r={blockquote:\"blockquote\",code:\"code\",li:\"li\",p:\"p\",pre:\"pre\",ul:\"ul\",...o.components};return t(e,{children:[n(r.p,{children:\"Welcome to the matrix.\"}),\"\\n\",n(r.p,{children:\"This is a standard paragraph but it renders with our custom mono font. If I want to drop some knowledge, I can use a blockquote:\"}),\"\\n\",t(r.blockquote,{children:[\"\\n\",n(r.p,{children:'\"Stay curious. Most interesting things happen outside the syllabus.\"'}),\"\\n\"]}),\"\\n\",n(r.p,{children:\"Here is a list of things I need to finish:\"}),\"\\n\",t(r.ul,{children:[\"\\n\",n(r.li,{children:\"Setup Velite\"}),\"\\n\",n(r.li,{children:\"Write MDX\"}),\"\\n\",n(r.li,{children:\"Deploy to Vercel\"}),\"\\n\"]}),\"\\n\",t(r.p,{children:[\"And here is some inline code like \",n(r.code,{children:\"npm run dev\"}),\", or a full code block:\"]}),\"\\n\",n(r.pre,{children:n(r.code,{className:\"language-javascript\",children:'console.log(\"Hello Priyadharshan!\");\\n'})})]})}return{default:function(e={}){const{wrapper:t}=e.components||{};return t?n(t,{...e,children:n(_createMdxContent,{...e})}):_createMdxContent(e)}};",
+    "permalink": "/blog/posts/my-first-post"
+  }
+]
