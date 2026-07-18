@@ -1,16 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Check, Paperclip } from 'lucide-react';
 import { BrutalCard } from '@/components/ui/brutal-card';
 import { BrutalButton } from '@/components/ui/brutal-button';
 
 export function Sidebar() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        setEmail('');
+        // Reset to idle after 5 seconds
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 3000);
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 3000);
+    }
+  };
+
   return (
     <aside className="space-y-8 h-full">
       {/* Widget 1: Today's Note */}
       <BrutalCard className="bg-brand-lime p-6 relative">
-        {/* Decorative Paperclip */}
         <Paperclip
           size={32}
           className="absolute -top-3 -right-2 rotate-12 text-black"
@@ -65,26 +94,31 @@ export function Sidebar() {
           Get new posts, ideas and random thoughts in your inbox.
         </p>
 
-        <form
-          className="space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <input
-            type="email"
-            placeholder="you@example.com"
+        <form className="space-y-4" onSubmit={handleSubscribe}>
+          <input 
+            type="email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com" 
+            className="w-full p-3 border-4 border-black font-mono text-sm focus:outline-none focus:ring-4 focus:ring-brand-purple focus:shadow-brutal transition-all" 
             required
-            className="w-full p-3 border-4 border-black font-mono text-sm focus:outline-none focus:ring-4 focus:ring-brand-purple focus:shadow-brutal transition-all"
+            disabled={status === 'loading' || status === 'success'}
           />
 
-          <BrutalButton
-            variant="primary"
+          <BrutalButton 
+            variant="primary" 
             className="w-full justify-center"
             type="submit"
+            disabled={status === 'loading' || status === 'success'}
           >
-            Subscribe →
+            {status === 'loading' ? 'Subscribing...' : status === 'success' ? 'Joined! ✓' : 'Subscribe →'}
           </BrutalButton>
+
+          {status === 'error' && (
+            <p className="text-xs font-bold text-red-600 bg-white p-1 border-2 border-black inline-block">
+              Failed to subscribe. Try again.
+            </p>
+          )}
         </form>
       </BrutalCard>
     </aside>

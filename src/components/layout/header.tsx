@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { Search } from 'lucide-react';
 
 export function Header() {
   return (
@@ -13,16 +14,19 @@ export function Header() {
       </Link>
       
       {/* Navigation Links */}
-      <nav className="hidden lg:flex gap-6 px-6 text-sm font-bold uppercase overflow-x-auto whitespace-nowrap">
+      <nav className="hidden lg:flex items-center gap-6 px-6 text-sm font-bold uppercase overflow-x-auto whitespace-nowrap">
         <Link href="/category/inner-monologue" className="hover:underline decoration-4 underline-offset-4">Inner Monologue</Link>
         <Link href="/category/tech" className="hover:underline decoration-4 underline-offset-4">Tech</Link>
         <Link href="/category/politics" className="hover:underline decoration-4 underline-offset-4">அரசியல்</Link>
         <Link href="/category/under-the-hood" className="hover:underline decoration-4 underline-offset-4">Under the Hood</Link>
         <Link href="/category/build-log" className="hover:underline decoration-4 underline-offset-4">Build Log</Link>
-        <Link href="/category/unfiltered" className="hover:underline decoration-4 underline-offset-4">Unfiltered</Link>
-        <div className="group relative cursor-pointer flex items-center gap-1 hover:underline decoration-4 underline-offset-4">
-          <span>More</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        
+        {/* Search Hint */}
+        <div className="flex items-center gap-2 ml-4 text-gray-500">
+          <Search size={16} strokeWidth={3} />
+          <span className="bg-gray-100 border-2 border-gray-300 px-1.5 py-0.5 rounded-sm text-xs tracking-widest">
+            CTRL+K
+          </span>
         </div>
       </nav>
 

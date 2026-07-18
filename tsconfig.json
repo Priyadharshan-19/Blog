@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "target": "ES2017",
     "lib": [
       "dom",
@@ -24,8 +25,12 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "#site/content": ["./.velite/index.js"]
+      "@/*": [
+        "./src/*"
+      ],
+      "#site/content": [
+        "./.velite/index.js"
+      ]
     }
   },
   "include": [

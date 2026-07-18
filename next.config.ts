@@ -1,11 +1,5 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  // Initialize Velite in the Webpack build step
-  webpack: (config) => {
-    config.plugins.push(new (require('velite/webpack/plugin'))());
-    return config;
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;

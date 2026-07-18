@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css"; // Adjust path if your globals.css is in app/
+import "./globals.css"; 
+import { CommandPalette } from "@/components/layout/command-palette";
 
 export const metadata: Metadata = {
   title: "Priya Dharshan | Think. Build. Explore.",
@@ -13,9 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen">
-        {/* We will inject Header, CommandPalette, and Footer here in Phase 2 */}
-        <main>{children}</main>
+      <body className="antialiased min-h-screen relative flex flex-col">
+        {/* Mount the command palette globally */}
+        <CommandPalette />
+        <main className="flex-1">{children}</main>
       </body>
     </html>
   );
