@@ -1,5 +1,6 @@
 import { defineConfig, s } from "velite";
 import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
 
 export default defineConfig({
   root: "src/content",
@@ -30,22 +31,28 @@ export default defineConfig({
           category: s.string(),
           readTime: s.string(),
           description: s.string(),
-          
-          // CHANGE 1: Use s.image() to tell Velite this is an image file
+
+          // Use s.image() to tell Velite this is an image file
           thumbnail: s.image().optional(),
 
           // Compile MDX
           content: s.mdx(),
+          
+          // Updated: Capture raw content as optional
+          raw: s.string().optional().default(""),
         })
         .transform((data) => ({
           ...data,
           permalink: `/blog/${data.slug}`,
+          // You may need to ensure your content is passed correctly here
+          raw: data.raw || "", 
         })),
     },
   },
 
   mdx: {
     rehypePlugins: [
+      rehypeSlug,
       [
         rehypePrettyCode,
         {
