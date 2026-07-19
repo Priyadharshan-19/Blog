@@ -22,7 +22,6 @@ export default defineConfig({
         .object({
           title: s.string().max(99),
 
-          // Remove "posts/" from generated slug
           slug: s.path().transform((slug) =>
             slug.replace(/^posts\//, "")
           ),
@@ -32,20 +31,20 @@ export default defineConfig({
           readTime: s.string(),
           description: s.string(),
 
-          // Use s.image() to tell Velite this is an image file
           thumbnail: s.image().optional(),
 
-          // Compile MDX
+          // MDX
           content: s.mdx(),
-          
-          // Updated: Capture raw content as optional
-          raw: s.string().optional().default(""),
+
+          // ✅ Raw markdown body
+          raw: s.raw(),
+
+          // ✅ Built-in TOC
+          toc: s.toc(),
         })
         .transform((data) => ({
           ...data,
           permalink: `/blog/${data.slug}`,
-          // You may need to ensure your content is passed correctly here
-          raw: data.raw || "", 
         })),
     },
   },

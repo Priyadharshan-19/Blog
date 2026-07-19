@@ -1,20 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand Colors */
+  /* ==========================================================
+     NEO BRUTALISM COLOR SYSTEM
+  ========================================================== */
+
   --color-brand-lime: #C8FF43;
   --color-brand-pink: #FF7EB6;
   --color-brand-purple: #7B4DFF;
-  --color-brand-bg: #FAFAFA;
+  --color-brand-yellow: #FFD84D;
+  --color-brand-orange: #FF9F43;
+  --color-brand-cyan: #49E6D1;
 
-  /* Brutalist Shadows */
-  --shadow-brutal: 6px 6px 0px 0px rgba(0, 0, 0, 1);
-  --shadow-brutal-sm: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-  --shadow-brutal-hover: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+  --color-paper: #FCFBF7;
+  --color-grid: #E7E7E7;
+
+  --color-border: #000000;
+  --color-text: #000000;
+
+  /* ==========================================================
+     SHADOWS
+  ========================================================== */
+
+  --shadow-brutal-sm: 4px 4px 0px #000;
+  --shadow-brutal: 6px 6px 0px #000;
+  --shadow-brutal-lg: 8px 8px 0px #000;
+
+  /* ==========================================================
+     RADIUS
+  ========================================================== */
+
+  --radius-brutal: 10px;
+  --radius-button: 6px;
+
+  /* ==========================================================
+     TRANSITIONS
+  ========================================================== */
+
+  --ease-brutal: cubic-bezier(.2,.8,.2,1);
 }
 
 @layer base {
-  * {
+
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -24,77 +54,205 @@
 
   body {
     margin: 0;
-    background-color: var(--color-brand-bg);
+
+    background-color: var(--color-paper);
+
     background-image:
-      linear-gradient(to right, #e5e5e5 1px, transparent 1px),
-      linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
+      linear-gradient(
+        to right,
+        var(--color-grid) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        var(--color-grid) 1px,
+        transparent 1px
+      );
+
     background-size: 24px 24px;
-    color: #000;
+
+    color: var(--color-text);
+
     font-family:
       system-ui,
       -apple-system,
       BlinkMacSystemFont,
       "Segoe UI",
       sans-serif;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-brand-lime);
+    color: black;
   }
 }
 
 @layer components {
-  .brutal-border {
-    border: 4px solid black;
-  }
+
+  /* ==========================================================
+     BRUTAL CARD
+  ========================================================== */
 
   .brutal-card {
-    border: 4px solid black;
-    border-radius: 10px;
     background: white;
+    border: 4px solid black;
+    border-radius: var(--radius-brutal);
     box-shadow: var(--shadow-brutal);
-    transition: all 0.2s ease;
+    transition: .2s var(--ease-brutal);
   }
+
+  .brutal-card:hover {
+    transform: translate(-4px,-4px);
+    box-shadow: var(--shadow-brutal-lg);
+  }
+
+  /* ==========================================================
+     BUTTONS
+  ========================================================== */
 
   .brutal-button {
     border: 4px solid black;
-    border-radius: 5px;
-    font-weight: 700;
+    border-radius: var(--radius-button);
+    font-weight: 800;
     text-transform: uppercase;
     box-shadow: var(--shadow-brutal-sm);
-    transition: all 0.2s ease;
+    transition: .2s var(--ease-brutal);
   }
 
   .brutal-button:hover {
-    transform: translate(-2px, -2px);
+    transform: translate(-2px,-2px);
     box-shadow: var(--shadow-brutal);
   }
 
   .brutal-button:active {
-    transform: translate(2px, 2px);
+    transform: translate(2px,2px);
     box-shadow: none;
   }
 
+  /* ==========================================================
+     BORDER
+  ========================================================== */
+
+  .brutal-border {
+    border: 4px solid black;
+  }
+
+  /* ==========================================================
+     SHADOW HELPERS
+  ========================================================== */
+
+  .shadow-brutal {
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .shadow-brutal-sm {
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .shadow-brutal-lg {
+    box-shadow: var(--shadow-brutal-lg);
+  }
+
+  /* ==========================================================
+     HOVER
+  ========================================================== */
+
   .brutal-hover {
-    transition: all 0.2s ease;
+    transition: .2s var(--ease-brutal);
   }
 
   .brutal-hover:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: var(--shadow-brutal-hover);
+    transform: translate(-4px,-4px);
+    box-shadow: var(--shadow-brutal-lg);
+  }
+
+  /* ==========================================================
+     PAPER
+  ========================================================== */
+
+  .paper {
+    background: white;
+    border: 4px solid black;
+    box-shadow: var(--shadow-brutal);
   }
 }
 
 @layer utilities {
+
+  /* ==========================================================
+     POP
+  ========================================================== */
+
   .animate-pop-in {
-    animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: pop .4s cubic-bezier(.175,.885,.32,1.275) forwards;
   }
 
   @keyframes pop {
+
     0% {
-      transform: scale(0.9);
       opacity: 0;
+      transform: scale(.9);
     }
 
     100% {
-      transform: scale(1);
       opacity: 1;
+      transform: scale(1);
     }
+
+  }
+
+  /* ==========================================================
+     GRID BACKGROUND
+  ========================================================== */
+
+  .bg-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        var(--color-grid) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        var(--color-grid) 1px,
+        transparent 1px
+      );
+
+    background-size: 24px 24px;
+  }
+
+  /* ==========================================================
+     COLORS
+  ========================================================== */
+
+  .bg-paper {
+    background: var(--color-paper);
+  }
+
+  .bg-lime {
+    background: var(--color-brand-lime);
+  }
+
+  .bg-pink {
+    background: var(--color-brand-pink);
+  }
+
+  .bg-purple {
+    background: var(--color-brand-purple);
+  }
+
+  .bg-yellow {
+    background: var(--color-brand-yellow);
+  }
+
+  .bg-orange {
+    background: var(--color-brand-orange);
+  }
+
+  .bg-cyan {
+    background: var(--color-brand-cyan);
   }
 }
