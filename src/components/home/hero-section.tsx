@@ -89,7 +89,7 @@ export function HeroSection() {
         <div className="absolute bottom-8 right-4 md:right-8 z-20 border-4 border-black bg-brand-purple text-white p-6 w-[280px] shadow-brutal transition-transform hover:-translate-y-2 hover:-translate-x-2 hover:shadow-brutal-hover">
           <div className="font-mono text-brand-lime mb-4 text-sm font-bold">&gt; whoami</div>
           <div className="font-mono text-sm space-y-2">
-            <div className="flex"><span className="w-16 opacity-80">name:</span> <span>Priya Dharshan</span></div>
+            <div className="flex"><span className="w-16 opacity-80">name:</span> <span>Priyadharshan</span></div>
             <div className="flex"><span className="w-16 opacity-80">role:</span> <span>Student & Builder</span></div>
             <div className="flex"><span className="w-16 opacity-80">focus:</span> <span>Tech | Ideas | Impact</span></div>
             <div className="flex"><span className="w-16 opacity-80">motto:</span> <span>Keep Exploring</span></div>

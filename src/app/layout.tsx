@@ -3,7 +3,7 @@ import "./globals.css";
 import { CommandPalette } from "@/components/layout/command-palette";
 
 export const metadata: Metadata = {
-  title: "Priya Dharshan | Think. Build. Explore.",
+  title: "Priyadharshan | Think. Build. Explore.",
   description: "A place where I share my thoughts, technical stuff, unconventional ideas and everything I find interesting.",
 };
 

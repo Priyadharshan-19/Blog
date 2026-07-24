@@ -11,7 +11,7 @@ export function Header() {
         className="flex w-full items-center gap-2 border-b-4 border-black bg-brand-lime px-6 py-4 font-black uppercase transition-colors hover:bg-[#b5f02c] md:w-auto md:border-b-0 md:border-r-4"
       >
         <span>&gt;&gt;</span>
-        <span>PRIYA DHARSHAN</span>
+        <span>PRIYADHARSHAN</span>
       </Link>
 
       {/* Navigation */}

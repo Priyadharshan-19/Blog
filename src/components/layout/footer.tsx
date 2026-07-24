@@ -14,7 +14,7 @@ export function Footer() {
 
       {/* WHITE BOX: Copyright */}
       <div className="flex-1 px-6 py-4 text-xs font-mono font-bold text-black uppercase text-center md:text-right">
-        <p>© 2026 PRIYA DHARSHAN.</p>
+        <p>© 2026 PRIYADHARSHAN.</p>
       </div>
 
       {/* Social Icons: With updated links and baby pink hover */}
