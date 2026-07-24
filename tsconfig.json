@@ -28,6 +28,9 @@
       "@/*": [
         "./src/*"
       ],
+      "#/.velite": [
+        "./.velite/*"
+      ],
       "#site/content": [
         "./.velite/index.js"
       ]
@@ -39,7 +42,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".velite"
   ],
   "exclude": [
     "node_modules"

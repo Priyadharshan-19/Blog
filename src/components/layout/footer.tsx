@@ -17,11 +17,11 @@ export function Footer() {
         <p>© 2026 PRIYA DHARSHAN.</p>
       </div>
 
-      {/* Social Icons: With baby pink hover */}
+      {/* Social Icons: With updated links and baby pink hover */}
       <div className="flex items-center border-t-4 md:border-t-0 md:border-l-4 border-black">
-        <a href="https://github.com" className="p-4 border-r-4 border-black hover:bg-[#ffc0cb] transition-colors"><Github size={20} /></a>
-        <a href="https://linkedin.com" className="p-4 border-r-4 border-black hover:bg-[#ffc0cb] transition-colors"><Linkedin size={20} /></a>
-        <a href="https://instagram.com" className="p-4 border-r-4 border-black hover:bg-[#ffc0cb] transition-colors"><Instagram size={20} /></a>
+        <a href="https://github.com/Priyadharshan-19" target="_blank" rel="noopener noreferrer" className="p-4 border-r-4 border-black hover:bg-[#ffc0cb] transition-colors"><Github size={20} /></a>
+        <a href="https://www.linkedin.com/in/m-priyadharshan" target="_blank" rel="noopener noreferrer" className="p-4 border-r-4 border-black hover:bg-[#ffc0cb] transition-colors"><Linkedin size={20} /></a>
+        <a href="https://www.instagram.com/__itz_dharshan__?igsh=M3FpbjU5NDVoMDgz" target="_blank" rel="noopener noreferrer" className="p-4 border-r-4 border-black hover:bg-[#ffc0cb] transition-colors"><Instagram size={20} /></a>
         <a href="mailto:your@email.com" className="p-4 hover:bg-[#ffc0cb] transition-colors"><Mail size={20} /></a>
       </div>
     </footer>

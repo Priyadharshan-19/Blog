@@ -1,0 +1,918 @@
+---
+title: "What Really Happens When You Open a Website"
+description: "Ever wonder what happens when you press Enter? Take a deep dive into DNS lookup, packet routing, and the hidden undersea cables that power the web."
+date: 2026-07-24
+category: "under-the-hood"
+readTime: "10 min read"
+series: "How the Internet Actually Works"
+part: 2
+---
+
+# What Really Happens When You Open a Website
+
+In the previous article, we met the four main characters that power the Internet.
+
+- 🖥️ **Client**
+- 🏢 **Server**
+- 🌍 **Internet Service Provider (ISP)**
+- 🛣️ **Routers**
+
+Each one plays an important role whenever you browse the web.
+
+But we stopped just before the interesting part.
+
+We never actually watched them work together.
+
+So let's do exactly that.
+
+Imagine you're sitting in front of your laptop.
+
+You open your browser...
+
+Type:
+
+```text
+google.com
+```
+
+And press **Enter**.
+
+The page appears almost instantly.
+
+To us...
+
+It feels effortless.
+
+But behind those few milliseconds lies an incredible chain of events involving computers, routers, data centers, and thousands of kilometers of fiber-optic cables.
+
+Let's follow that journey together.
+
+---
+
+<div className="brutal-border bg-brand-purple text-white p-6 shadow-brutal-sm my-10">
+
+## 🚀 Mission
+
+Throughout this article, we'll follow **one single request** from the moment you press **Enter** until Google's homepage appears on your screen.
+
+By the end, you'll understand exactly what happens behind every website you visit.
+
+</div>
+
+---
+
+## Step 1 — Your Browser Has a Small Problem
+
+When you type:
+
+```text
+google.com
+```
+
+Your browser immediately encounters its first obstacle.
+
+It knows the **name**.
+
+But it has absolutely no idea where Google actually lives.
+
+Humans prefer names because they're easy to remember.
+
+Imagine trying to remember this every time you wanted to search something:
+
+```text
+142.250.183.78
+```
+
+Not very practical.
+
+That's why we use names like:
+
+- google.com
+- youtube.com
+- github.com
+- openai.com
+
+They're designed for humans.
+
+Unfortunately...
+
+Networks don't understand names.
+
+They understand **IP addresses**.
+
+Every computer connected to the Internet has one.
+
+Before your browser can send even a single request...
+
+It first needs to discover Google's IP address.
+
+So it asks someone for directions.
+
+---
+
+## Meet DNS — The Internet's Phonebook
+
+Think about your phone for a moment.
+
+When you want to call your friend...
+
+You don't remember their phone number.
+
+You simply search for:
+
+**Priya**
+
+Your phone quietly finds the number for you.
+
+DNS works almost exactly the same way.
+
+Instead of storing people's names and phone numbers...
+
+It stores **domain names** and their corresponding **IP addresses**.
+
+Whenever you type:
+
+```text
+google.com
+```
+
+Your computer sends a request to a **DNS Server**.
+
+The question is surprisingly simple.
+
+> **"Do you know the IP address for google.com?"**
+
+The DNS server quickly searches its records...
+
+Finds the correct IP address...
+
+And sends it back.
+
+Only now does your browser know where Google's servers actually are.
+
+<figure className="my-8 border-4 border-black bg-white p-2 shadow-brutal">
+  <img
+    src="/9.png"
+    alt="DNS translating a domain name into an IP address"
+    className="w-full h-auto"
+  />
+  <figcaption className="bg-brand-lime px-4 py-2 font-mono text-xs text-black border-t-4 border-black">
+    Fig 8: DNS translates a human-friendly domain name into a machine-friendly IP address.
+  </figcaption>
+</figure>
+
+Notice something interesting.
+
+You never had to know Google's IP address.
+
+Your browser handled everything automatically.
+
+This entire lookup usually takes only a few milliseconds.
+
+---
+
+<div className="brutal-border bg-brand-lime p-6 shadow-brutal-sm my-8">
+
+<strong>CORE CONCEPT</strong>
+
+Humans navigate the Internet using **domain names**.
+
+Computers navigate the Internet using **IP addresses**.
+
+**DNS (Domain Name System)** acts as the translator between the two.
+
+Without DNS, you'd have to memorize numerical IP addresses for every website you wanted to visit.
+
+</div>
+
+---
+
+## A Tiny Shortcut You Never Notice
+
+Here's something even more interesting.
+
+Your browser doesn't always contact a DNS server.
+
+If you've recently visited the same website...
+
+Your computer may already remember its IP address.
+
+This temporary memory is called a **DNS Cache**.
+
+Instead of asking the DNS server again...
+
+Your browser simply reuses the stored address.
+
+Think of it like calling your best friend.
+
+The first few times, you search for their number.
+
+Eventually...
+
+You remember it by heart.
+
+Your computer does exactly the same thing.
+
+Caching helps websites load even faster by avoiding unnecessary DNS lookups.
+
+---
+
+## Step 2 — The Journey Finally Begins
+
+Now your browser knows Google's address.
+
+The destination has been found.
+
+It's finally time to send the request.
+
+But here's another question.
+
+How does your laptop actually reach a computer that might be thousands of kilometers away?
+
+It can't magically send data directly to Google's servers.
+
+Instead...
+
+Your request begins a long journey across the Internet.
+
+It leaves your browser...
+
+Travels to your home Wi-Fi router...
+
+Gets forwarded to your **Internet Service Provider (ISP)**...
+
+Then starts hopping across multiple routers around the world.
+
+Each router performs one simple job.
+
+It looks at the destination IP address...
+
+Finds the best available path...
+
+And forwards your request to the next router.
+
+Eventually...
+
+After passing through many different networks...
+
+Your request reaches Google's data center.
+
+<figure className="my-8 border-4 border-black bg-white p-2 shadow-brutal">
+  <img
+    src="/10.png"
+    alt="A request traveling from a laptop through routers and an ISP to Google's servers"
+    className="w-full h-auto"
+  />
+  <figcaption className="bg-brand-purple px-4 py-2 font-mono text-xs text-white border-t-4 border-black">
+    Fig 9: The journey of a web request from your laptop to Google's servers through multiple routers and networks.
+  </figcaption>
+</figure>
+
+What's fascinating is that your request doesn't travel along one giant cable directly to Google.
+
+Instead...
+
+It moves through many independent networks.
+
+Each router only worries about one thing:
+
+> **"Where should I send this next?"**
+
+No single router knows the entire journey.
+
+Each one simply forwards the request to the next best destination until it finally reaches Google's servers.
+
+---
+
+<div className="brutal-border bg-brand-purple text-white p-6 shadow-brutal-sm my-10">
+
+## 💡 Did You Know?
+
+When you load a modern website, your browser usually doesn't make **just one request**.
+
+It requests:
+
+- 📄 The HTML page
+- 🎨 CSS stylesheets
+- ⚙️ JavaScript files
+- 🖼️ Images
+- 🔤 Fonts
+- 🎥 Videos
+- 📦 API responses
+
+Each of these can follow a similar journey across the Internet.
+
+That's why browsers constantly send and receive dozens—or even hundreds—of requests in the background.
+
+</div>
+
+---
+
+---
+
+## Step 3 — Why Websites Don't Travel as One Giant File
+
+At this point...
+
+Your request has finally reached Google's servers.
+
+The server understands exactly what you're asking for.
+
+Now it has to send the webpage back.
+
+But here's something that surprises many people.
+
+The server doesn't simply bundle everything into one enormous file and send it across the Internet.
+
+Instead...
+
+It does something much smarter.
+
+It **breaks the webpage into thousands of tiny pieces** before sending anything.
+
+These pieces are called **packets**.
+
+---
+
+## Why Split Everything Into Packets?
+
+Imagine you're moving to a new house.
+
+You own a large bookshelf.
+
+Would you carry the entire bookshelf on your back?
+
+Probably not.
+
+You'd take it apart...
+
+Pack the pieces into smaller boxes...
+
+Move each box separately...
+
+Then reassemble everything once you arrive.
+
+That's exactly how the Internet works.
+
+Instead of sending one giant block of data...
+
+It sends lots of smaller packets.
+
+Each packet contains only a tiny portion of the original information.
+
+Whether it's:
+
+- 📄 An HTML document
+- 🎨 A CSS file
+- ⚙️ JavaScript
+- 🖼️ Images
+- 🎥 Videos
+
+Everything eventually becomes packets.
+
+<figure className="my-8 border-4 border-black bg-white p-2 shadow-brutal">
+  <img
+    src="/11.png"
+    alt="Data divided into packets before being transmitted across the Internet"
+    className="w-full h-auto"
+  />
+  <figcaption className="bg-brand-lime px-4 py-2 font-mono text-xs text-black border-t-4 border-black">
+    Fig 10: Before travelling across the Internet, large files are divided into smaller packets.
+  </figcaption>
+</figure>
+
+---
+
+<div className="brutal-border bg-brand-lime p-6 shadow-brutal-sm my-8">
+
+<strong>CORE CONCEPT</strong>
+
+The Internet never thinks in terms of **webpages** or **videos**.
+
+It only knows how to move **packets**.
+
+Everything you use online—whether it's Netflix, Instagram, GitHub, or YouTube—is ultimately transmitted as thousands (or even millions) of packets.
+
+</div>
+
+---
+
+## What's Inside a Packet?
+
+Think of each packet as a tiny parcel being shipped through the postal system.
+
+Every parcel needs more than just its contents.
+
+It also needs a shipping label.
+
+A network packet is no different.
+
+Every packet contains two important parts.
+
+### 📦 Payload
+
+This is the actual data.
+
+It could be:
+
+- Part of an image
+- Some HTML
+- A few lines of CSS
+- A JavaScript file
+- Even a tiny fragment of a YouTube video
+
+### 🏷️ Header
+
+The header acts like the address label on a package.
+
+It contains information such as:
+
+- 📍 Source IP Address
+- 🎯 Destination IP Address
+- 🔢 Packet Number
+- ⚙️ Protocol Information
+- ✅ Error Checking Data
+
+Without this information...
+
+Routers wouldn't know where to send the packet.
+
+And your computer wouldn't know how to put everything back together again.
+
+---
+
+## Every Packet Travels Its Own Journey
+
+Here's where things become really fascinating.
+
+You might imagine every packet following exactly the same path.
+
+That's not always true.
+
+One packet might travel through Chennai.
+
+Another might travel through Mumbai.
+
+Another could even pass through Singapore before reaching its destination.
+
+The Internet doesn't force every packet to stay together.
+
+Instead...
+
+Routers make independent decisions for each one.
+
+Their only goal is simple.
+
+> **Find the fastest available path.**
+
+That means two neighbouring packets can take completely different routes across the world...
+
+...and still arrive safely.
+
+---
+
+<div className="brutal-border bg-brand-purple text-white p-6 shadow-brutal-sm my-10">
+
+## 💡 Did You Know?
+
+The Internet doesn't reserve a dedicated road for your data.
+
+Instead, packets from **millions of people** travel together across the same cables.
+
+At any given moment...
+
+The same fiber-optic cable may be carrying:
+
+- Someone streaming Netflix
+- A student attending an online class
+- A gamer playing Valorant
+- A company making a bank transaction
+- You reading this very article
+
+All of these packets travel side by side without getting mixed up because every packet carries its own destination address.
+
+</div>
+
+---
+
+## Step 4 — Putting Everything Back Together
+
+Eventually...
+
+The packets arrive at your computer.
+
+But they don't always arrive in the same order they were sent.
+
+For example...
+
+The server might send them like this:
+
+```text
+Packet 1
+Packet 2
+Packet 3
+Packet 4
+Packet 5
+```
+
+But your computer could receive them like this:
+
+```text
+Packet 3
+Packet 1
+Packet 5
+Packet 2
+Packet 4
+```
+
+At first glance...
+
+That sounds like chaos.
+
+Fortunately...
+
+Every packet carries its own sequence number.
+
+Your browser patiently waits until enough packets have arrived.
+
+Then it rearranges them into the correct order.
+
+Only after that does it begin rendering the webpage.
+
+This entire process usually happens so quickly that you never notice it.
+
+To you...
+
+The page simply appears.
+
+---
+
+## The Server's Reply Completes the Journey
+
+Once Google's server has finished preparing the webpage...
+
+It sends thousands of packets back across the Internet.
+
+Those packets travel through multiple routers...
+
+Cross several different networks...
+
+Eventually reach your ISP...
+
+Pass through your home router...
+
+And finally arrive at your browser.
+
+<figure className="my-8 border-4 border-black bg-white p-2 shadow-brutal">
+  <img
+    src="/12.png"
+    alt="Packets returning from Google's server to the user's computer"
+    className="w-full h-auto"
+  />
+  <figcaption className="bg-brand-purple px-4 py-2 font-mono text-xs text-white border-t-4 border-black">
+    Fig 11: The server sends the requested data back as packets, which your browser reassembles into the webpage you see.
+  </figcaption>
+</figure>
+
+Within a fraction of a second...
+
+Thousands of packets have travelled across cities...
+
+Countries...
+
+And sometimes even continents...
+
+Just so your browser can display one webpage.
+
+But this raises another interesting question.
+
+How can data travel between continents so quickly?
+
+Does every request really bounce off satellites in space?
+
+Not quite.
+
+The real answer lies deep beneath the ocean.
+---
+
+## Step 5 — The Internet's Invisible Highways
+
+By now...
+
+Your browser has successfully received thousands of packets from Google's servers.
+
+But there's one question we haven't answered yet.
+
+**How did those packets travel across the world so quickly?**
+
+Many people imagine that Internet traffic is constantly bouncing off satellites floating in space.
+
+It sounds reasonable.
+
+After all...
+
+Satellites help with GPS, television broadcasts, and weather forecasting.
+
+Surely the Internet works the same way...
+
+Right?
+
+Surprisingly...
+
+**Not for most of the Internet.**
+
+In reality, more than **95% of international Internet traffic** travels through **undersea fiber-optic cables** stretched across the ocean floor.
+
+These cables are the true backbone of the modern Internet.
+
+---
+
+## Beneath the Ocean Lies the Internet
+
+Imagine connecting every continent with thousands of kilometers of incredibly thin glass cables.
+
+Now imagine shining pulses of light through those cables at nearly the speed of light.
+
+That's exactly how fiber optics work.
+
+Instead of sending electrical signals like traditional copper wires...
+
+Fiber-optic cables transmit data using **light**.
+
+Every packet you've learned about travels as tiny flashes of light through these fibers.
+
+These cables stretch across oceans, connecting countries and continents together.
+
+Whether you're:
+
+- 🌏 Browsing a website hosted in the United States
+- 🎥 Watching a YouTube video from Japan
+- 💻 Pushing code to GitHub
+- 🤖 Using ChatGPT
+
+There's a very good chance your data is travelling through one or more of these underwater cables.
+
+<figure className="my-8 border-4 border-black bg-white p-2 shadow-brutal">
+  <img
+    src="/13.png"
+    alt="Global network of undersea fiber-optic cables connecting continents"
+    className="w-full h-auto"
+  />
+  <figcaption className="bg-brand-lime px-4 py-2 font-mono text-xs text-black border-t-4 border-black">
+    Fig 12: Undersea fiber-optic cables form the backbone of the global Internet, connecting continents through high-speed optical links.
+  </figcaption>
+</figure>
+
+---
+
+<div className="brutal-border bg-brand-lime p-6 shadow-brutal-sm my-8">
+
+<strong>CORE CONCEPT</strong>
+
+When people say "the Internet is everywhere," they often imagine satellites.
+
+In reality, the Internet is mostly a **massive network of fiber-optic cables** running under streets, across countries, and beneath oceans.
+
+These cables carry enormous amounts of data every single second.
+
+</div>
+
+---
+
+## Why Not Use Satellites?
+
+If satellites already exist...
+
+Why don't we simply send all Internet traffic through them?
+
+The answer comes down to one word:
+
+**Latency.**
+
+A signal sent to a satellite has to travel thousands of kilometers into space...
+
+Then back down to Earth.
+
+That extra distance introduces noticeable delays.
+
+Fiber-optic cables, on the other hand...
+
+Provide:
+
+- ⚡ Lower latency
+- 🚀 Faster transmission speeds
+- 📦 Higher bandwidth
+- 💰 Lower operating costs
+
+That's why companies like Google, Meta, Microsoft, Amazon, and many telecom providers invest billions of dollars building and maintaining undersea cable networks.
+
+Satellites are still useful...
+
+Especially in remote locations...
+
+But for the majority of global Internet traffic...
+
+Fiber optics are the preferred choice.
+
+---
+
+## What Happens If a Cable Breaks?
+
+At this point, you might be wondering...
+
+"If so much of the Internet depends on these cables...
+
+What happens if one of them gets damaged?"
+
+It's a good question.
+
+And surprisingly...
+
+Cable failures happen more often than you might think.
+
+Ships dragging anchors...
+
+Fishing equipment...
+
+Earthquakes...
+
+Even underwater landslides...
+
+Can damage these cables.
+
+Would that disconnect the Internet?
+
+Thankfully...
+
+No.
+
+<figure className="my-8 border-4 border-black bg-white p-2 shadow-brutal">
+  <img
+    src="/14.png"
+    alt="Internet traffic automatically rerouting when an undersea cable is damaged"
+    className="w-full h-auto"
+  />
+  <figcaption className="bg-brand-purple px-4 py-2 font-mono text-xs text-white border-t-4 border-black">
+    Fig 13: When one route becomes unavailable, routers automatically redirect traffic through alternative paths.
+  </figcaption>
+</figure>
+
+---
+
+## The Internet Was Built to Handle Failure
+
+One of the Internet's greatest strengths is that it was never designed around a single path.
+
+Instead...
+
+It behaves more like a giant road network.
+
+Imagine you're driving to another city.
+
+Halfway through your journey...
+
+You discover that the highway has been closed.
+
+Do you give up and go home?
+
+Of course not.
+
+You simply follow a different road.
+
+The Internet works exactly the same way.
+
+Every router continuously exchanges information with neighboring routers.
+
+If one connection suddenly becomes unavailable...
+
+Routers quickly calculate another available path.
+
+Your packets are automatically redirected.
+
+Most of the time...
+
+You won't even notice it happening.
+
+---
+
+<div className="brutal-border bg-brand-purple text-white p-6 shadow-brutal-sm my-10">
+
+## 💡 Did You Know?
+
+Every second...
+
+Millions of routing decisions are made across the Internet.
+
+Routers are constantly checking:
+
+- Which path is the fastest?
+- Which path is congested?
+- Which path is unavailable?
+- Which route should packets take next?
+
+This dynamic decision-making allows the Internet to continue operating even when parts of the network fail.
+
+</div>
+
+---
+
+## Putting Everything Together
+
+Let's revisit everything we've learned.
+
+Imagine opening your browser one more time.
+
+You type:
+
+```text
+google.com
+```
+
+Here's what happens behind the scenes.
+
+1. 🌐 Your browser asks a DNS server for Google's IP address.
+
+2. 📍 DNS returns the correct IP address.
+
+3. 📤 Your browser creates an HTTP request.
+
+4. 🏠 The request leaves your device and reaches your home router.
+
+5. 🌍 Your ISP forwards the request into the global Internet.
+
+6. 🛣️ Multiple routers forward the request toward Google's data center.
+
+7. 🌊 If necessary, the request crosses oceans using undersea fiber-optic cables.
+
+8. 🏢 Google's servers receive the request.
+
+9. 📦 The webpage is split into thousands of packets.
+
+10. 🚀 Those packets travel back across the Internet.
+
+11. 🧩 Your browser reassembles every packet into the original webpage.
+
+12. 🎉 Google's homepage appears on your screen.
+
+All of this usually happens in well under **one second**.
+
+---
+
+<div className="brutal-border bg-white p-6 shadow-brutal-sm my-10">
+
+## 📚 What We Learned
+
+Throughout this two-part journey, we've explored how the Internet works from the ground up.
+
+✅ The Internet is a massive network of interconnected computers.
+
+✅ Clients request information while servers provide it.
+
+✅ ISPs connect our devices to the global network.
+
+✅ Routers decide the best path for every packet.
+
+✅ DNS translates domain names into IP addresses.
+
+✅ Data travels as packets rather than one large file.
+
+✅ Fiber-optic cables connect countries and continents.
+
+✅ The Internet automatically reroutes traffic when failures occur.
+
+The next time you open a website...
+
+Remember that behind a single click lies one of the most complex engineering systems humanity has ever built.
+
+</div>
+
+---
+
+# Final Thoughts
+
+The Internet often feels like magic.
+
+Websites appear instantly.
+
+Messages arrive within seconds.
+
+Videos stream without interruption.
+
+But now you know the truth.
+
+Behind every click...
+
+There's a remarkable collaboration between clients, servers, DNS, routers, fiber-optic cables, and millions of packets travelling across the globe.
+
+The next time someone asks,
+
+> **"How does the Internet actually work?"**
+
+You'll know it's not magic.
+
+It's one of the greatest engineering achievements ever created.
+
+And now...
+
+You understand the journey of how data travels.
+

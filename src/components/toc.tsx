@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { BookOpen, Check } from "lucide-react";
 import { TocItem } from "@/lib/toc";
 
@@ -42,9 +41,18 @@ export function TableOfContents({ toc }: TableOfContentsProps) {
   if (!toc.length) return null;
 
   const activeIndex = toc.findIndex((t) => t.id === activeId);
-  
-  // UPDATED: Now includes all items in the progress bar
-  const topLevel = toc; 
+  const topLevel = toc;
+
+  // Custom scroll handler to prevent header overlap
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      // The -100 offset ensures the heading doesn't hide behind a sticky header
+      const y = element.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   return (
     <aside className="sticky top-24 w-[270px]">
@@ -57,17 +65,20 @@ export function TableOfContents({ toc }: TableOfContentsProps) {
           </h2>
         </div>
 
-        {/* Progress bar */}
-        <div className="flex h-2.5 border-b-[3px] border-black">
+        {/* 
+          FIX 1: Used divide-x and a white background on the parent container 
+          to absorb any sub-pixel flexbox rounding errors cleanly.
+        */}
+        <div className="flex h-2.5 w-full border-b-[3px] border-black bg-white divide-x-[3px] divide-black">
           {topLevel.map((item, i) => {
             const globalIndex = toc.findIndex((t) => t.id === item.id);
             const passed = activeIndex !== -1 && globalIndex <= activeIndex;
             return (
               <div
-                key={item.id}
-                className={`flex-1 ${
-                  passed ? "bg-black" : "bg-white"
-                } ${i !== topLevel.length - 1 ? "border-r-[2px] border-black" : ""}`}
+                key={`${item.id}-${i}`}
+                className={`flex-1 h-full ${
+                  passed ? "bg-black" : "bg-transparent"
+                }`}
               />
             );
           })}
@@ -77,7 +88,8 @@ export function TableOfContents({ toc }: TableOfContentsProps) {
         {activeIndex !== -1 && (
           <div className="border-b-[3px] border-black px-5 py-3">
             <p className="mb-1 font-mono text-[10px] font-bold text-black/50">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(toc.length).padStart(2, "0")}
+              {String(activeIndex + 1).padStart(2, "0")} /{" "}
+              {String(toc.length).padStart(2, "0")}
             </p>
             <p className="text-[13px] font-black leading-snug">
               {toc[activeIndex].text}
@@ -93,9 +105,14 @@ export function TableOfContents({ toc }: TableOfContentsProps) {
             const isSub = item.level === 3;
 
             return (
-              <li key={item.id}>
-                <Link
+              <li key={`${item.id}-${index}`}>
+                {/* 
+                  FIX 2: Switched from Next.js <Link> to a native <a> tag 
+                  with a custom smooth scroll function so the router doesn't block it.
+                */}
+                <a
                   href={`#${item.id}`}
+                  onClick={(e) => handleScroll(e, item.id)}
                   className={`
                     flex items-center gap-2 py-1.5
                     ${isSub ? "pl-6" : ""}
@@ -103,7 +120,11 @@ export function TableOfContents({ toc }: TableOfContentsProps) {
                   `}
                 >
                   {visited && !active ? (
-                    <Check size={12} strokeWidth={3} className="shrink-0 text-brand-teal" />
+                    <Check
+                      size={12}
+                      strokeWidth={3}
+                      className="shrink-0 text-brand-teal"
+                    />
                   ) : (
                     <span className="w-3 shrink-0 font-mono text-[10px] font-bold">
                       {active ? "•" : ""}
@@ -118,7 +139,7 @@ export function TableOfContents({ toc }: TableOfContentsProps) {
                   >
                     {item.text}
                   </span>
-                </Link>
+                </a>
               </li>
             );
           })}

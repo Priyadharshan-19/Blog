@@ -1,6 +1,5 @@
 import React from "react";
 import * as runtime from "react/jsx-runtime";
-import { CopyButton } from './copy-button';
 
 const components = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -40,18 +39,11 @@ const components = {
   figcaption: (props: React.HTMLAttributes<HTMLElement>) => (
     <figcaption className="flex items-center justify-between border-b-4 border-black bg-brand-purple px-4 py-2 font-mono text-xs text-white" {...props} />
   ),
-  pre: ({ className, children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
-    // @ts-ignore
-    const rawText = children?.props?.children?.toString() || '';
-    return (
-      <>
-        <CopyButton text={rawText} />
-        <pre className="p-4 pt-12 overflow-x-auto text-sm font-mono leading-relaxed text-gray-100" {...props}>
-          {children}
-        </pre>
-      </>
-    );
-  },
+  pre: ({ className, children, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
+    <pre className="p-4 overflow-x-auto text-sm font-mono leading-relaxed text-gray-100" {...props}>
+      {children}
+    </pre>
+  ),
 };
 
 interface MDXContentProps {
