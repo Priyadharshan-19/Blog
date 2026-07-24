@@ -76,7 +76,8 @@ export default function Home() {
             {/* Posts List */}
             <div className="border-4 border-black bg-white shadow-brutal overflow-hidden">
               {featuredPosts.map((post: Post, index) => {
-                const thumbnailSrc = getThumbnailPath(post.slug) || post.thumbnail;
+                // Prioritize MDX frontmatter thumbnail first, fallback to slug matching function
+                const thumbnailSrc = post.thumbnail || getThumbnailPath(post.slug);
 
                 return (
                   <article

@@ -31,7 +31,7 @@ export default defineConfig({
           readTime: s.string(),
           description: s.string(),
 
-          thumbnail: s.image().optional(),
+          thumbnail: s.string().optional(),
 
           // MDX
           content: s.mdx(),
